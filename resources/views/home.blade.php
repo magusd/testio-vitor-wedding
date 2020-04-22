@@ -15,6 +15,7 @@
                     @endif
 
                     You are logged in!
+                    Check the <a href="{{route('albums')}}">albums</a> page!
                 </div>
             </div>
         </div>

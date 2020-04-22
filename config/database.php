@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Str;
 
+if($url = env('JAWSDB_URL')){
+    putenv('DATABASE_URL='.$url);
+}
+
 return [
 
     /*
