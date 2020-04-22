@@ -16,7 +16,7 @@
                                 <input value="{{$album->name}}" type="text" class="form-control" name="name" id="name" aria-describedby="nameHelp" placeholder="Enter your album name">
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" checked="{{$album->private?'checked':''}}" name="private" class="form-check-input" id="privacy">
+                                <input type="checkbox" {{$album->private?'checked':''}} name="private" class="form-check-input" id="privacy">
                                 <label class="form-check-label" for="privacy">This album is private</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Edit Album</button>

@@ -13,11 +13,10 @@ class AlbumsController extends Controller
     public function index()
     {
         if(auth()->user()->admin){
-            $albums = Album::get();
+            $albums = Album::withCount('photos')->get();
         }else{
-            $albums = auth()->user()->albums()->get();
+            $albums = auth()->user()->albums()->withCount('photos')->get();
         }
-
         return view('albums.index',compact('albums'));
     }
 
@@ -60,11 +59,15 @@ class AlbumsController extends Controller
 
     public function update(UpdateAlbumRequest $request,$id)
     {
-        $album = Album::with('photos')->find($id);
+        $album = Album::find($id);
         $this->authorize('update',$album);
         if(!$album)
             abort(404);
-        $album->fill($request->all());
+        $input = $request->all();
+        if(!isset($input['private'])){
+            $input['private'] = false;
+        }
+        $album->fill($input);
         $album->save();
         return redirect(route('albums.show',$id));
     }

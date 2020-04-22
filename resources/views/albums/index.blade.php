@@ -12,7 +12,12 @@
                         @forelse($albums as $album)
                                 <a href="{{route('albums.show',$album->id)}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     {{$album->name}}
-                                    <span class="badge badge-primary badge-pill">1</span>
+                                    @if($album->private)
+                                        <i class="fas fa-eye-slash text-danger"></i>
+                                    @else
+                                        <i class="fas fa-eye text-success"></i>
+                                    @endif
+                                    <span class="badge badge-primary badge-pill">{{$album->photos_count}}</span>
                                 </a>
                         @empty
                             <span>You have no albums! Create your first by cliking the button bellow!</span>
