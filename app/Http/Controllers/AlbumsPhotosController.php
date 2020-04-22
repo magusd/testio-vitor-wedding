@@ -45,4 +45,13 @@ class AlbumsPhotosController extends Controller
         }
         return redirect(route('albums.show',$album->id));
     }
+
+    public function show($id,$photo_id)
+    {
+        $photo = Photo::with('album')->find($photo_id);
+        if(!$photo) abort(404);
+        $this->authorize('view',$photo);
+
+        return view('photos.show',compact('photo'));
+    }
 }

@@ -34,6 +34,7 @@ Route::group([
     Route::get('/{id}/delete','AlbumsController@deleteWarning')->name('albums.delete.warning');
     Route::delete('/{id}','AlbumsController@delete')->name('albums.delete');
 
+    Route::get('/{id}/photos/{photo_id}','AlbumsPhotosController@show')->name('album.photo.show');
     Route::get('/{id}/upload','AlbumsPhotosController@upload')->name('albums.photos.create');
     Route::post('/{id}/photos','AlbumsPhotosController@store')->name('albums.photos.store');
 });

@@ -28,15 +28,21 @@
                                     Delete
                                 </a>
                             </li>
-
-
                         </ul>
                     </div>
 
                     <div class="card-body">
-                        <h5 class="card-title">Album {{$album->name}}</h5>
+                        <h5 class="card-title">Album {{$album->name}}
+                            @if($album->private)
+                                <i class="fas fa-eye-slash text-danger"></i>
+                            @else
+                                <i class="fas fa-eye text-success"></i>
+                            @endif
+                        </h5>
                         @forelse($album->photos as $photo)
-                            <img class="img-thumbnail" src="data:image/png;base64, {{base64_encode(\Illuminate\Support\Facades\Storage::get($photo->path))}}" alt="">
+                            <a href="{{route('album.photo.show',['id'=>$album->id,'photo_id'=>$photo->id])}}">
+                                <img class="img-thumbnail" src="data:image/png;base64, {{base64_encode(\Illuminate\Support\Facades\Storage::get($photo->path))}}" alt="">
+                            </a>
                         @empty
                             <span>This album has no photos. To add photos go <a href="{{route('albums.photos.create',$album->id)}}">here</a></span>
                         @endforelse
