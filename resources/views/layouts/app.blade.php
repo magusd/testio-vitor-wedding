@@ -33,7 +33,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('albums') }}">{{ __('Albums') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -72,7 +74,21 @@
             </div>
         </nav>
 
+
         <main class="py-4">
+
+            <div class="flash-message">
+                @foreach (['danger', 'warning', 'success', 'info'] as $type)
+                    @if(session()->has('alert-' . $type))
+                        <div class="alert alert-{{ $type }}">{{ session()->get('alert-' . $type) }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
             @yield('content')
         </main>
     </div>

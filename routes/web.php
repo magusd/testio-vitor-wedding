@@ -21,6 +21,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+Route::group(['prefix'=>'albums'],function(){
+    Route::get('/','AlbumsController@index')->name('albums');
+    Route::get('/create','AlbumsController@create')->name('albums.create');
+    Route::post('/','AlbumsController@store')->name('albums.store');
+    Route::get('/{id}','AlbumsController@show')->name('albums.show');
+    Route::get('/{id}/edit','AlbumsController@edit')->name('albums.edit');
+    Route::put('/{id}','AlbumsController@update')->name('albums.update');
+    Route::get('/{id}/delete','AlbumsController@deleteWarning')->name('albums.delete.warning');
+    Route::delete('/{id}','AlbumsController@delete')->name('albums.delete');
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/{id}/upload','AlbumsPhotosController@upload')->name('albums.photos.create');
+    Route::post('/{id}/photos','AlbumsPhotosController@store')->name('albums.photos.store');
+});
