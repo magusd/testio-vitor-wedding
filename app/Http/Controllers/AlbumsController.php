@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
 use App\Http\Requests\CreateAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
 use Illuminate\Http\Request;
@@ -22,6 +23,9 @@ class AlbumsController extends Controller
     public function store(CreateAlbumRequest $request)
     {
         $input = $request->all();
+        if(!isset($input['private'])){
+            $input['private'] = false;
+        }
         $album = auth()->user()->albums()->create($input);
         if($album){
             $request->session()->flash('status', 'Your album was created!');
@@ -33,6 +37,7 @@ class AlbumsController extends Controller
     public function show($id)
     {
         $album = auth()->user()->albums()->with('photos')->find($id);
+        $this->authorize('view',$album);
         if(!$album)
             abort(404);
         return view('albums.show',compact('album'));
@@ -41,6 +46,7 @@ class AlbumsController extends Controller
     public function edit($id)
     {
         $album = auth()->user()->albums()->with('photos')->find($id);
+        $this->authorize('view',$album);
         if(!$album)
             abort(404);
         return view('albums.edit',compact('album'));
@@ -49,6 +55,7 @@ class AlbumsController extends Controller
     public function update(UpdateAlbumRequest $request,$id)
     {
         $album = auth()->user()->albums()->with('photos')->find($id);
+        $this->authorize('update',$album);
         if(!$album)
             abort(404);
         $album->fill($request->all());
@@ -59,6 +66,7 @@ class AlbumsController extends Controller
     public function deleteWarning($id)
     {
         $album = auth()->user()->albums()->with('photos')->find($id);
+        $this->authorize('delete',$album);
         if(!$album)
             abort(404);
         return view('albums.delete-warning',compact('album'));
@@ -74,6 +82,7 @@ class AlbumsController extends Controller
         }
 
         $album = auth()->user()->albums()->with('photos')->find($id);
+        $this->authorize('delete',$album);
         if(!$album)
             abort(404);
 

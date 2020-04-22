@@ -21,7 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix'=>'albums'],function(){
+Route::group([
+        'prefix'=>'albums',
+        'middleware' => 'auth:web'
+    ],function(){
     Route::get('/','AlbumsController@index')->name('albums');
     Route::get('/create','AlbumsController@create')->name('albums.create');
     Route::post('/','AlbumsController@store')->name('albums.store');
