@@ -12,7 +12,12 @@ class AlbumsController extends Controller
 {
     public function index()
     {
-        $albums = auth()->user()->albums()->get();
+        if(auth()->user()->admin){
+            $albums = Album::get();
+        }else{
+            $albums = auth()->user()->albums()->get();
+        }
+
         return view('albums.index',compact('albums'));
     }
 
@@ -37,7 +42,7 @@ class AlbumsController extends Controller
 
     public function show($id)
     {
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('view',$album);
         if(!$album)
             abort(404);
@@ -46,7 +51,7 @@ class AlbumsController extends Controller
 
     public function edit($id)
     {
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('view',$album);
         if(!$album)
             abort(404);
@@ -55,7 +60,7 @@ class AlbumsController extends Controller
 
     public function update(UpdateAlbumRequest $request,$id)
     {
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('update',$album);
         if(!$album)
             abort(404);
@@ -66,7 +71,7 @@ class AlbumsController extends Controller
 
     public function deleteWarning($id)
     {
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('delete',$album);
         if(!$album)
             abort(404);
@@ -82,7 +87,7 @@ class AlbumsController extends Controller
             return redirect()->back();
         }
 
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('delete',$album);
         if(!$album)
             abort(404);

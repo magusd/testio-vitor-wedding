@@ -55,8 +55,7 @@ class AlbumPolicy
      */
     public function update(User $user, Album $album)
     {
-        return !$album->private ||
-            $album->user_id == $user->id ||
+        return $album->user_id == $user->id ||
             $user->admin;
     }
 
@@ -69,8 +68,7 @@ class AlbumPolicy
      */
     public function delete(User $user, Album $album)
     {
-        return !$album->private ||
-            $album->user_id == $user->id ||
+        return $album->user_id == $user->id ||
             $user->admin;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
 use App\Http\Requests\PhotoUploadRequest;
 use App\Photo;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class AlbumsPhotosController extends Controller
 {
     public function upload($id)
     {
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('view',$album);
         if(!$album)
             abort(404);
@@ -20,7 +21,7 @@ class AlbumsPhotosController extends Controller
 
     public function store(PhotoUploadRequest $request,$id)
     {
-        $album = auth()->user()->albums()->with('photos')->find($id);
+        $album = Album::with('photos')->find($id);
         $this->authorize('create',Photo::class);
         if(!$album)
             abort(404);

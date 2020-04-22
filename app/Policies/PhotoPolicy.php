@@ -55,8 +55,7 @@ class PhotoPolicy
      */
     public function update(User $user, Photo $photo)
     {
-        return !$photo->album->private ||
-            $photo->album->user_id == $user->id ||
+        return $photo->album->user_id == $user->id ||
             $user->admin;
     }
 
@@ -69,8 +68,7 @@ class PhotoPolicy
      */
     public function delete(User $user, Photo $photo)
     {
-        return !$photo->album->private ||
-            $photo->album->user_id == $user->id ||
+        return $photo->album->user_id == $user->id ||
             $user->admin;
     }
 }
