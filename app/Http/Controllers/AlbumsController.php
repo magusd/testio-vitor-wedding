@@ -28,9 +28,8 @@ class AlbumsController extends Controller
     public function store(CreateAlbumRequest $request)
     {
         $input = $request->all();
-        if(!isset($input['private'])){
-            $input['private'] = false;
-        }
+        $input['private'] = !isset($input['private'])?true:false;
+
         $album = auth()->user()->albums()->create($input);
         if($album){
             $request->session()->flash('status', 'Your album was created!');
@@ -64,9 +63,7 @@ class AlbumsController extends Controller
         if(!$album)
             abort(404);
         $input = $request->all();
-        if(!isset($input['private'])){
-            $input['private'] = false;
-        }
+        $input['private'] = !isset($input['private'])?true:false;
         $album->fill($input);
         $album->save();
         return redirect(route('albums.show',$id));
