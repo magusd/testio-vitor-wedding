@@ -9,7 +9,7 @@
 
                     <div class="card-body">
 
-                        <img class="img-fluid" src="data:image/png;base64, {{base64_encode(\Illuminate\Support\Facades\Storage::get($photo->path))}}" alt="">
+                        <img class="img-fluid" src="data:image/png;base64, {{$photo->base64}}" alt="">
 
                     </div>
                 </div>

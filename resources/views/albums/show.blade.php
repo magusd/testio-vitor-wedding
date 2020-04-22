@@ -41,7 +41,7 @@
                         </h5>
                         @forelse($album->photos as $photo)
                             <a href="{{route('album.photo.show',['id'=>$album->id,'photo_id'=>$photo->id])}}">
-                                <img class="img-thumbnail" src="data:image/png;base64, {{base64_encode(\Illuminate\Support\Facades\Storage::get($photo->path))}}" alt="">
+                                <img class="img-thumbnail" src="data:image/png;base64, {{$photo->base64}}" alt="">
                             </a>
                         @empty
                             <span>This album has no photos. To add photos go <a href="{{route('albums.photos.create',$album->id)}}">here</a></span>

@@ -12,4 +12,14 @@ class Photo extends Model
     {
         return $this->belongsTo(Album::class);
     }
+
+    public function getBase64Attribute($value)
+    {
+        try{
+            $contents = \Illuminate\Support\Facades\Storage::get($this->path);
+            return base64_encode($contents);
+        }catch (\Exception $e){
+            return "";
+        }
+    }
 }
