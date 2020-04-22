@@ -41,4 +41,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class);
     }
+
+    public function photos_path()
+    {
+        $sha = sha1($this->id);
+        return 'users/'.substr($sha,0,2).'/'.substr($sha,2);
+    }
 }

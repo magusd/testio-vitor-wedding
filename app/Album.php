@@ -9,7 +9,7 @@ class Album extends Model
     protected $fillable = ['name','private'];
     public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function photos()
@@ -20,6 +20,11 @@ class Album extends Model
     public function getNameAttribute($value)
     {
         return ucfirst($value);
+    }
+
+    public function photos_path()
+    {
+        return $this->owner->photos_path().'/'.$this->id;
     }
 
 }

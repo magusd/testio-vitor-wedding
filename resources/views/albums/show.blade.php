@@ -35,9 +35,11 @@
 
                     <div class="card-body">
                         <h5 class="card-title">Album {{$album->name}}</h5>
-
-
-                        {{$album->photos}}
+                        @forelse($album->photos as $photo)
+                            <img class="img-thumbnail" src="data:image/png;base64, {{base64_encode(\Illuminate\Support\Facades\Storage::get($photo->path))}}" alt="">
+                        @empty
+                            <span>This album has no photos. To add photos go <a href="{{route('albums.photos.create',$album->id)}}">here</a></span>
+                        @endforelse
                     </div>
 
                 </div>

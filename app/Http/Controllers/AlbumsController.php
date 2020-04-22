@@ -6,6 +6,7 @@ use App\Album;
 use App\Http\Requests\CreateAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AlbumsController extends Controller
 {
@@ -87,11 +88,8 @@ class AlbumsController extends Controller
             abort(404);
 
         $name = $album->name;
-        $paths = array_map(function($photo){
-            return $photo['path'];
-        },$album->photos->toArray());
         $album->photos()->delete();
-        #delete photos disk $paths
+        Storage::deleteDirectory($album->photos_path());
         $album->delete();
 
         $request->session()->flash('alert-success', "Album $name was deleted!");
