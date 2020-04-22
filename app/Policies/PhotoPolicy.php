@@ -16,9 +16,11 @@ class PhotoPolicy
      * @param  \App\User  $user
      * @return mixed
      */
+
+
     public function viewAny(User $user)
     {
-        return $user->admin;
+        return false;
     }
 
     /**
@@ -30,9 +32,8 @@ class PhotoPolicy
      */
     public function view(User $user, Photo $photo)
     {
-        return !$photo->album->private ||
-            $photo->album->user_id == $user->id ||
-            $user->admin;
+        if(!$photo->album->private) return true;
+        return $photo->album->user_id == $user->id;
     }
 
     /**
@@ -55,8 +56,7 @@ class PhotoPolicy
      */
     public function update(User $user, Photo $photo)
     {
-        return $photo->album->user_id == $user->id ||
-            $user->admin;
+        return $photo->album->user_id == $user->id;
     }
 
     /**
@@ -68,7 +68,6 @@ class PhotoPolicy
      */
     public function delete(User $user, Photo $photo)
     {
-        return $photo->album->user_id == $user->id ||
-            $user->admin;
+        return $photo->album->user_id == $user->id;
     }
 }

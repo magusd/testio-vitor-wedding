@@ -30,8 +30,8 @@ class AlbumPolicy
      */
     public function view(User $user, Album $album)
     {
-        return !$album->private ||
-                $album->user_id == $user->id ||
+        if(!$album->private) return true;
+        return $album->user_id == $user->id ||
                 $user->admin;
     }
 
